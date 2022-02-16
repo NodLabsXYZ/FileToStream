@@ -1,0 +1,14 @@
+{
+  "name": "filetostream",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "~4.16.1",
+    "sse-pubsub": "^1.4.1",
+    "tailing-stream": "^0.2.0"
+  }
+}
