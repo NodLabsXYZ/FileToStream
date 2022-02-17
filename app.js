@@ -8,11 +8,9 @@ app.use(cors());
 
 const channel = new SSEChannel();
 
-const stream = TailingReadableStream.createReadStream("~/log.txt", {timeout: 0});
-console.log("STREAMING", "../log.txt", stream);
+const stream = TailingReadableStream.createReadStream("../log.txt", {timeout: 0});
 
 stream.on('data', buffer => {
-  console.log("DATA", buffer.toString());
   channel.publish(buffer.toString(), 'log')
 });
 
