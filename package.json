@@ -8,9 +8,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "~4.16.1",
-    "rocket-turtle-tail": "^0.1.0",
     "sse-pubsub": "^1.4.1",
-    "tail": "^2.2.4",
-    "tailing-stream": "^0.2.0"
+    "tail": "^2.2.4"
   }
 }
