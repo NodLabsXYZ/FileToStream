@@ -9,6 +9,7 @@
     "cors": "^2.8.5",
     "express": "~4.16.1",
     "sse-pubsub": "^1.4.1",
+    "tail": "^2.2.4",
     "tailing-stream": "^0.2.0"
   }
 }

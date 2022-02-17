@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const TailingReadableStream = require('tailing-stream');
+const Tail = require('tail').Tail;
 const SSEChannel = require('sse-pubsub');
 
 const app = express();
@@ -8,15 +8,26 @@ app.use(cors());
 
 const channel = new SSEChannel();
 
-const stream = TailingReadableStream.createReadStream("../log.txt", {timeout: 0});
+const tail = new Tail("../log.txt");
 
-stream.on('data', buffer => {
-  channel.publish(buffer.toString(), 'log')
+tail.on("line", function(data) {
+  console.log("Line: " + data);
+  channel.publish(data.toString(), 'log')
 });
 
-stream.on('close', () => {
-  console.log("close");
+tail.on("error", function(error) {
+  console.log('ERROR: ', error);
 });
+
+// const stream = TailingReadableStream.createReadStream("../log.txt", {timeout: 0});
+
+// stream.on('data', buffer => {
+//   channel.publish(buffer.toString(), 'log')
+// });
+
+// stream.on('close', () => {
+//   console.log("close");
+// });
 
 app.get('/stream', (req, res) => channel.subscribe(req, res));
 
