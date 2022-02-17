@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const Tail = require('tail').Tail;
+// const Tail = require('tail').Tail;
+const RocketTurtleTail = require('rocket-turtle-tail');
 const SSEChannel = require('sse-pubsub');
 
 const app = express();
@@ -8,16 +9,28 @@ app.use(cors());
 
 const channel = new SSEChannel();
 
-const tail = new Tail("../log.txt");
+const tail = new RocketTurtleTail('../log.txt');
 
-tail.on("line", function(data) {
-  console.log("Line: " + data);
-  channel.publish(data.toString(), 'log')
+tail.on('line', (line) => {
+  console.log('OH LOOK, A LINE!', line);
 });
 
-tail.on("error", function(error) {
-  console.log('ERROR: ', error);
+tail.on('error', (err) => {
+  console.log('Boooooo an error:', err);
 });
+
+tail.start();
+
+// const tail = new Tail("../log.txt");
+
+// tail.on("line", function(data) {
+//   console.log("Line: " + data);
+//   channel.publish(data.toString(), 'log')
+// });
+
+// tail.on("error", function(error) {
+//   console.log('ERROR: ', error);
+// });
 
 // const stream = TailingReadableStream.createReadStream("../log.txt", {timeout: 0});
 
